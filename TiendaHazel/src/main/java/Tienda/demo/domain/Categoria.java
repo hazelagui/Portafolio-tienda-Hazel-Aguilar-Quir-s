@@ -10,7 +10,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+import java.util.List;
 import lombok.Data;
 
 /**
@@ -53,4 +53,8 @@ public class Categoria implements Serializable {
         this.descripcion = descripcion;
         this.activo = activo;
     }
+    // Relacion de uno a muchos clase producto
+    @OneToMany(mappedBy = "categoria")
+    private List <Producto> productos;
+    
 }
