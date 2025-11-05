@@ -52,15 +52,7 @@
                         </li>
                         
                         <!-- Dropdown de extras -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                [[#{plantilla.extras}]]
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{/pruebas/listado}">[[#{plantilla.asociaciones}]]</a></li>
-                                <li><a class="dropdown-item" th:href="@{/pruebas/listado2}">[[#{plantilla.consultas}]]</a></li>
-                            </ul>
-                        </li>
+                        <li class="nav-item px-2"><a class="nav-link" th:href="@{/consultas/listado}">[[#{plantilla.consultas}]]</a></li>  
                         
                         <!-- Dropdown de administración -->
                         <li class="nav-item dropdown">
