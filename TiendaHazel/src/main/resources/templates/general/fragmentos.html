@@ -33,17 +33,44 @@
             <div class="container"> 
                 <!-- Enlace al inicio con título de la app -->
                 <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
-                
+
                 <!-- Botón hamburguesa para pantallas pequeñas -->
                 <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 
+                <!-- Login y logout -->
+                <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">
+                            <i class="fas fa-sign-in-alt"></i>
+                            <span class="ms-1">Login</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav" sec:authorize="isAuthenticated()">
+                    <li class="nav-item my-auto">
+                        <a class="nav-link">
+                            <i class="fas fa-user"></i>
+                            <span sec:authentication="name" class="ms-1"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item my-auto">
+                        <form method="post" th:action="@{/logout}">
+                            <button class="btn nav-link" type="submit">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <span class="ms-1">Logout</span>
+                            </button>
+                        </form>
+                    </li>
+                </ul>
+                
                 <!-- Menú desplegable -->
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     
                     <!-- Sección de enlaces principales -->
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav" sec:authorize="hasrole('ROLE_VENDEDOR')or hasrole('ROLE_ADMIN')">
                         <li class="nav-item px-2">
                             <a class="nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a>
                         </li>
@@ -55,7 +82,7 @@
                         <li class="nav-item px-2"><a class="nav-link" th:href="@{/consultas/listado}">[[#{plantilla.consultas}]]</a></li>  
                         
                         <!-- Dropdown de administración -->
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" sec:authorize="hasrole('ROLE_ADMIN')">
                             <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                                 [[#{plantilla.admin}]]
                             </a>
@@ -95,6 +122,7 @@
                         </li>
                     </ul>
                     
+                                        
                     <!-- Bloque para resultados dinámicos -->
                     <div id="resultBlock"></div>
                 </div>

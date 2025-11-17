@@ -66,9 +66,8 @@
                                             <th>[[#{categoria.descripcion}]]</th>
                                             <th>[[#{categoria.imagen}]]</th>
                                             <th>[[#{categoria.activo}]]</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
+                                            <th sec:authorize="hasrole('ROLE_ADMIN')></th></tr></thead>
+
                                     <tbody>
                                         <tr th:each="c : ${categorias}">
                                             <td>[[${c.idCategoria}]]</td>
