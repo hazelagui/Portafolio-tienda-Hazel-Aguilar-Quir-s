@@ -17,13 +17,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-
-
-
-/**
- *
- * @author hazelagx
- */
 @Service
 public class FirebaseStorageService {
     @Value("${firebase.bucket.name}")
@@ -38,7 +31,7 @@ public class FirebaseStorageService {
     }
 
     //Sube un archivo de imagen al almacenamiento de Firebase.    
-    public String uploadImage(MultipartFile localFile, String folder, Integer id) throws IOException {
+    public String uploadImage(MultipartFile localFile, String folder, long id) throws IOException {
         String originalName = localFile.getOriginalFilename();
         String fileExtension = "";
         if (originalName != null && originalName.contains(".")) {
@@ -92,7 +85,3 @@ public class FirebaseStorageService {
         return String.format("%014d", id);
     }
 }
-
-    
-
-

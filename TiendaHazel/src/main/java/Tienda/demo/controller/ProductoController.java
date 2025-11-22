@@ -5,9 +5,10 @@
 
 package Tienda.demo.controller;
 
+
 import Tienda.demo.domain.Producto;
-import Tienda.demo.service.CategoriaService;
 import Tienda.demo.service.ProductoService;
+import Tienda.demo.service.CategoriaService;
 import jakarta.validation.Valid;
 import java.util.Locale;
 import java.util.Optional;
@@ -23,13 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-/**
- *
- * @author hazelagx
- */
-@Controller 
+@Controller
 @RequestMapping("/producto")
 public class ProductoController {
+    
     @Autowired
     private ProductoService productoService;
     
@@ -90,7 +88,6 @@ public class ProductoController {
         model.addAttribute("producto", productoOpt.get());
         var categorias = categoriaService.getCategorias(true);
         model.addAttribute("categorias", categorias);
-
         return "/producto/modifica";
     }
 }

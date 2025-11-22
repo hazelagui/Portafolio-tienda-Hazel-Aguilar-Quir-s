@@ -4,28 +4,26 @@
  */
 
 package Tienda.demo.domain;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import lombok.Data;
 
-
-/**
- *
- * @author hazelagx
- */
 @Data
 @Entity
 @Table(name = "producto")
 public class Producto implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_producto")
     private Integer idProducto;
-    //private Integer idCategoria; ya no se usa por la anotacion @ManyToOne
+
+  //  private Integer idCategoria;
 
     @Column(nullable = false, length = 50)
     @NotBlank(message = "La descripción no puede estar vacía.")
@@ -49,7 +47,6 @@ public class Producto implements Serializable {
     private boolean activo;
     
     @ManyToOne
-    @JoinColumn (name = "id_categoria")
+    @JoinColumn(name = "id_categoria")
     private Categoria categoria;
-    
 }

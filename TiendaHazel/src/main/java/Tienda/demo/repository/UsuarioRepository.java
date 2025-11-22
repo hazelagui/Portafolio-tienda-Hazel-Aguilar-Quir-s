@@ -5,10 +5,11 @@
 
 package Tienda.demo.repository;
 
-import Tienda.demo.domain.Ruta;
-import java.util.List;
-import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface RutaRepository extends JpaRepository<Ruta, Integer> {
-    List<Ruta> findAllByOrderByRequiereRolAsc();
+import Tienda.demo.domain.Usuario;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.Optional;
+
+public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
+    Optional<Usuario> findByUsernameAndActivoTrue(String username);
 }

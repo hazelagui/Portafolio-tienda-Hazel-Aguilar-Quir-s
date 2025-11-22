@@ -1,32 +1,27 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package Tienda.demo.domain;
+
+//es un esqueleto para presentar algo, explica la bd al codigo, esta es mi tabla etc..el domain preenta como el java al sql
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
+//import java.util.List;
 import lombok.Data;
+import java.util.List;
 
-/**
- *
- * @author hazelagx
- */
 @Data
 @Entity
-@Table(name = "categoria")
+@Table(name="categoria")
 public class Categoria implements Serializable {
+
     private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_categoria")
-    private Integer idCategoria;
+    private Long idCategoria;
 
     @NotBlank(message = "La descripción no puede estar vacía")
     @Size(max = 50, message = "La descripción no puede exceder los 50 caracteres")
@@ -46,6 +41,10 @@ public class Categoria implements Serializable {
     @Column(name = "fecha_modificacion", insertable = false, updatable = false)
     private LocalDateTime fechaModificacion;
 
+//    @OneToMany
+//    @JoinColumn(name = "id_categoria", updatable = false, insertable = false)
+//    private List<Producto> productos;
+
     public Categoria() {
     }
 
@@ -53,8 +52,10 @@ public class Categoria implements Serializable {
         this.descripcion = descripcion;
         this.activo = activo;
     }
-    // Relacion de uno a muchos clase producto
-    @OneToMany(mappedBy = "categoria")
-    private List <Producto> productos;
     
+    // Relación de uno a muchos con la clase Producto
+    // Sin "cascade" ni "orphanRemoval" para evitar la propagación de operaciones.
+    @OneToMany(mappedBy = "categoria")
+    private List<Producto> productos;
 }
+ 

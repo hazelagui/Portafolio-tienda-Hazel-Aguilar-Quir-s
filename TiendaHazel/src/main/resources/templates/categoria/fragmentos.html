@@ -66,15 +66,16 @@
                                             <th>[[#{categoria.descripcion}]]</th>
                                             <th>[[#{categoria.imagen}]]</th>
                                             <th>[[#{categoria.activo}]]</th>
-                                            <th sec:authorize="hasrole('ROLE_ADMIN')></th></tr></thead>
-
+                                            <th sec:authorize="hasRole('ROLE_ADMIN')"></th>
+                                        </tr>
+                                    </thead>
                                     <tbody>
                                         <tr th:each="c : ${categorias}">
                                             <td>[[${c.idCategoria}]]</td>
                                             <td>[[${c.descripcion}]]</td>
                                             <td><img th:src="@{${c.rutaImagen}}" alt="noData" height="75"/></td>
                                             <td th:text="${c.activo} ? 'Activa':'Inactiva'"></td>
-                                            <td>
+                                            <td sec:authorize="hasRole('ROLE_ADMIN')"><div class="d-flex align-items-start">
                                                 <button type="button" class="btn btn-danger"
                                                         data-bs-toggle="modal" data-bs-target="#confirmModal"
                                                         th:data-bs-id="${c.idCategoria}"
@@ -83,7 +84,8 @@
                                                 </button>                                           
                                                 <a th:href="@{/categoria/modificar/}+${c.idCategoria}" class="btn btn-warning">
                                                     <i class="fas fa-pencil-alt"></i> [[#{accion.actualizar}]]
-                                                </a>                                                
+                                                </a>  
+                                                     </div>
                                             </td>
                                         </tr>
                                     </tbody>

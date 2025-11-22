@@ -7,7 +7,7 @@ package Tienda.demo.repository;
 
 /**
  *
- * @author hazelagx
+ * @author andre
  */
 public interface RolRepository {
 

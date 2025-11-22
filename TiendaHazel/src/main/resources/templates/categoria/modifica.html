@@ -2,12 +2,16 @@
 <!-- Esta es la página principal del sitio web TechShop -->
 <html>
     <head th:replace="~{general/fragmentos :: head}"/>
-    
+
     <body>
         <header th:replace="~{general/fragmentos :: header}"/>
+
         <section th:replace="~{categoria/fragmentos :: editar}"/>
         <section th:replace="~{general/fragmentos :: mostrarToast}"/>
 
-        <fooster th:replace="~{general/fragmentos :: footer}"/>
+        <footer th:replace="~{general/fragmentos :: footer}"/>
+        
+        <script th:src="@{/js/rutinas.js}"></script>
+        
     </body>
 </html>

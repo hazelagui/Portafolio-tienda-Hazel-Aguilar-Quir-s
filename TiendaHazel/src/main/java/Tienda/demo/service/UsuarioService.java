@@ -7,7 +7,7 @@ package Tienda.demo.service;
 
 /**
  *
- * @author hazelagx
+ * @author andre
  */
 public class UsuarioService {
 
