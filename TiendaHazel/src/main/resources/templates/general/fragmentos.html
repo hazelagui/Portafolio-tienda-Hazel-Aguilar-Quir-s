@@ -1,191 +1,185 @@
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml"
+<!DOCTYPE html>      <!-- Define que el documento es un archivo HTML5. -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:th="http://www.thymeleaf.org"      
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
-<!-- 
-  Documento HTML con soporte para XHTML.
-  Se incluyen namespaces:
-   - th: para Thymeleaf (plantillas dinámicas en Spring Boot).
-   - sec: para integraciones de seguridad con Spring Security.
--->
-
-<head th:fragment="head">
-    <!-- Fragmento de cabecera que puede ser reutilizado con Thymeleaf -->
-    <title>TechShop</title>
-    <meta charset="UTF-8"/>
+    <!-- Inicia el documento HTML y define espacios de nombres XML -->
     
-    <!-- Carga de estilos desde dependencias WebJars -->
-    <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/>
-    <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/>
-    
-    <!-- Carga de librerías JavaScript desde WebJars -->
-    <script th:src="@{/js/rutinas.js}"></script>
-    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
-    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>        
-</head>
+    <head th:fragment="head">
+        <!-- Inicia la sección <head> y la define como un fragmento reutilizable llamado head en Thymeleaf. -->
+         
+        <title>TechShop</title>
+        <!-- Define el conjunto de caracteres como UTF-8 para soportar acentos y otros caracteres especiales
+        <meta charset="UTF-8"/> 
+        -->
+        <!-- Importa el CSS de Bootstrap desde WebJars usando Thymeleaf (@{} genera la URL). -->
+        <link th:href="@{/webjars/bootstrap/css/bootstrap.min.css}" rel="stylesheet"/> 
+        <!-- Importa los iconos de Font Awesome desde WebJars. -->
+        <link th:href="@{/webjars/font-awesome/css/all.css}" rel="stylesheet"/> 
+         <script th:src="@{/js/rutinas.js}"></script>
 
-<body>
-    <!-- =================== HEADER =================== -->
-    <header th:fragment="header" class="header">
-        <!-- Barra de navegación principal -->
-        <nav class="navbar navbar-expand-sm p-0">
-            <div class="container"> 
-                <!-- Enlace al inicio con título de la app -->
-                <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
-
-                <!-- Botón hamburguesa para pantallas pequeñas -->
-                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                
-                <!-- Login y logout -->
-                <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">
-                            <i class="fas fa-sign-in-alt"></i>
-                            <span class="ms-1">Login</span>
-                        </a>
-                    </li>
-                </ul>
-
-                <ul class="navbar-nav" sec:authorize="isAuthenticated()">
-                    <li class="nav-item my-auto">
-                        <a class="nav-link">
-                            <i class="fas fa-user"></i>
-                            <span sec:authentication="name" class="ms-1"></span>
-                        </a>
-                    </li>
-                    <li class="nav-item my-auto">
-                        <form method="post" th:action="@{/logout}">
-                            <button class="btn nav-link" type="submit">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span class="ms-1">Logout</span>
-                            </button>
-                        </form>
-                    </li>
-                </ul>
-                
-                <!-- Menú desplegable -->
-                <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    
-                    <!-- Sección de enlaces principales -->
-                    <ul class="navbar-nav" sec:authorize="hasrole('ROLE_VENDEDOR')or hasrole('ROLE_ADMIN')">
-                        <li class="nav-item px-2">
-                            <a class="nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a>
-                        </li>
-                        <li class="nav-item px-2">
-                            <a class="nav-link" th:href="@{/producto/listado}">[[#{plantilla.productos}]]</a>
-                        </li>
+        <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+        <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+        <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>        
+        <!-- Importan las librerías JavaScript necesarias para el funcionamiento de Bootstrap (jQuery, Popper y Bootstrap JS). -->
+    </head>
+     
+      
+    <body>
+        <!-- Define un fragmento llamado header, reutilizable con Thymeleaf, y le da la clase CSS header. -->
+        <header th:fragment="header" class="header"> 
+            <!-- Crea una barra de navegación con Bootstrap (navbar-expand-sm para que colapse en pantallas pequeñas, y sin padding). -->
+            <nav class="navbar navbar-expand-sm p-0"> 
+                 <!-- Contenedor Bootstrap que centraliza el contenido -->          
+                <div class="container">     
+                     <!-- Logo o título del sitio que redirige al inicio (/). El texto se toma de un archivo de mensajes (.properties) internacionalizado. -->
+                    <a th:href="@{/}" class="navbar-brand">[[#{aplicacion.titulo}]]</a>
+                     <!-- Botón para colapsar el menú en móviles. -->
+                    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <!-- Ícono del botón colapsable. -->
+                        <span class="navbar-toggler-icon"></span> 
+                    </button>
+                     <!-- Contenedor del menú colapsable y dividido en dos secciones (menú principal e idioma/sesión). -->
+                    <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse"> 
+                        <!-- Lista de enlaces de navegación (menú principal). --> 
+                       <ul class="navbar-nav" sec:authorize="hasRole('ROLE_VENDEDOR') or hasRole('ROLE_ADMIN')">
+                            <!-- Opción del menú para ver categorías. El texto es internacionalizado. -->
+                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/categoria/listado}">[[#{plantilla.categorias}]]</a></li> 
+                            <!-- Opción para productos. -->
+                            <li class="nav-item px-2"><a class="nav-link" th:href="@{/producto/listado}">[[#{plantilla.productos}]]</a></li> 
+                         <!-- menu de extras para filtrar-->
+                       <li class="nav-item px-2"><a class="nav-link" th:href="@{/consultas/listado}">[[#{plantilla.consultas}]]</a></li>               
+                             <!-- Menú desplegable "Admin". -->
+                            <li class="nav-item dropdown" sec:authorize="hasRole('ROLE_ADMIN')">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    [[#{plantilla.admin}]]</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/usuario/listado}">[[#{plantilla.usuarios}]]</a></li>  
+                                    <!-- Submenú lateral para Seguridad. -->
+                                    <li class="submenu submenu-md dropend"> 
+                                        <a class="dropdown-item dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
+                                           onclick="event.stopPropagation();">
+                                            [[#{plantilla.seguridad}]]
+                                        </a>
+                                        <ul class="dropdown-menu">                                            
+                                            <li><a class="dropdown-item" th:href="@{/role/listado}">[[#{plantilla.troles}]]</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/usuario_role/asignar}">[[#{plantilla.permisos}]]</a></li>
+                                            <li><a class="dropdown-item" th:href="@{/ruta/listado}">[[#{plantilla.rutas}]]</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a class="dropdown-item" th:href="@{/constante/listado}">[[#{plantilla.constantes}]]</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- Desplegable para seleccionar idioma de la aplicación. -->
+                        <ul class="navbar-nav"> 
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
+                                    [[#{plantilla.idioma}]]</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" th:href="@{/(lang=es)}">Español</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/(lang=en)}">English</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
+                                    <!-- Cambian el idioma de la app con una variable lang. -->
+                                </ul>
+                            </li>
+                        </ul>
                         
-                        <!-- Dropdown de extras -->
-                        <li class="nav-item px-2"><a class="nav-link" th:href="@{/consultas/listado}">[[#{plantilla.consultas}]]</a></li>  
+                        <ul class="navbar-nav" sec:authorize="!isAuthenticated()">
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/login}">
+                                    <i class="fas fa-sign-in-alt"></i>
+                                    <span class="ms-1">Login</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav" sec:authorize="isAuthenticated()">
+                            <li class="nav-item my-auto">
+                                <a class="nav-link">
+                                    <img th:src="@{${session.imagenUsuario}}" 
+                                         alt="your image" height="40" class="rounded-circle"/>
+                                    <span sec:authentication="name" class="ms-1"></span>
+                                </a>
+                            </li>
+                            <li class="nav-item my-auto">
+                                <form method="post" th:action="@{/logout}">
+                                    <button class="btn nav-link" type="submit">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                        <span class="ms-1">Logout</span>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                         
-                        <!-- Dropdown de administración -->
-                        <li class="nav-item dropdown" sec:authorize="hasrole('ROLE_ADMIN')">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                [[#{plantilla.admin}]]
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{/usuario/listado}">[[#{plantilla.usuarios}]]</a></li>
-                                
-                                <!-- Submenú seguridad -->
-                                <li class="submenu submenu-md dropend">
-                                    <a class="dropdown-item dropdown-toggle" role="button" data-bs-toggle="dropdown" aria-expanded="false"
-                                       onclick="event.stopPropagation();">
-                                        [[#{plantilla.seguridad}]]
-                                    </a>
-                                    <ul class="dropdown-menu">                                            
-                                        <li><a class="dropdown-item" th:href="@{/role/listado}">[[#{plantilla.troles}]]</a></li>
-                                        <li><a class="dropdown-item" th:href="@{/usuario_role/asignar}">[[#{plantilla.permisos}]]</a></li>
-                                        <li><a class="dropdown-item" th:href="@{/ruta/listado}">[[#{plantilla.rutas}]]</a></li>
-                                    </ul>
-                                </li>
-                                
-                                <li><a class="dropdown-item" th:href="@{/constante/listado}">[[#{plantilla.constantes}]]</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    
-                    <!-- Sección de idiomas -->
-                    <ul class="navbar-nav">
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                [[#{plantilla.idioma}]]
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" th:href="@{/(lang=es)}">Español</a></li>
-                                <li><a class="dropdown-item" th:href="@{/(lang=en)}">English</a></li>
-                                <li><a class="dropdown-item" th:href="@{/(lang=fr)}">Française</a></li>
-                                <li><a class="dropdown-item" th:href="@{/(lang=pt)}">Portugaise</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                    
-                                        
-                    <!-- Bloque para resultados dinámicos -->
-                    <div id="resultBlock"></div>
-                </div>
-            </div>
-        </nav>
-        
-        <!-- Sección del encabezado principal -->
-        <section id="main-header" class="py-2 bg-success text-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6">
-                        <!-- Título destacado con icono -->
-                        <h1><i class="fas fa-cog"></i> [[#{plantilla.suTienda}]]</h1>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </header>
-
-    <!-- =================== FOOTER =================== -->
-    <footer th:fragment="footer" class="p-2 mt-5 bg-info text-white">
-        <p class="lead text-center">[[#{plantilla.derechos}]] &COPY;</p>
-    </footer>
-    <section th:fragment="mostrarToast">
-            <div aria-live="polite" aria-atomic="true" 
-                 class="position-fixed top-50 start-50 translate-middle" style="z-index: 1080;">                
-                <div th:if="${error}" class="toast show"
-                     role="alert"
-                     aria-live="assertive"                     
-                     aria-atomic="true"
-                     data-bs-autohide="true">
-                    <div class="toast-header text-white bg-danger">
-                        <i class="fa-solid fa-bomb"></i> <strong clas=me-auto> [[#{error}]]</strong>
-                    </div>
-                    <div class="toast-body">
-                        <p>[[${error}]]</p>
-                        <div class="mt-2 pt-2 border-top text-center">
-                            <button type="button" class="btn btn-secondary btn-sm" 
-                                    data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                        
+                        
+                        <div id="resultBlock">
                         </div>
                     </div>
                 </div>
-                <div th:if="${todoOk}" class="toast show"
-                     role="status"
-                     aria-live="polite"
-                     aria-atomic="true"
-                     data-bs-autohide="true">
-                    <div class="toast-header text-white bg-success">
-                        <i class="fa-solid fa-square-check"></i> <strong clas=me-auto> [[#{atencion}]]</strong>
-                    </div>
-                    <div class="toast-body">
-                        <p>[[${todoOk}]]</p>
-                        <div class="mt-2 pt-2 border-top text-center">
-                            <button type="button" class="btn btn-secondary btn-sm" 
-                                    data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+            </nav>
+            <!-- Sección con fondo verde (Bootstrap bg-success), texto blanco, y padding vertical. -->
+            <section id="main-header" class="py-2 bg-success text-white"> 
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h1><i class="fas fa-cog"></i> [[#{plantilla.suTienda}]]</h1>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-</body>
+            <section th:fragment="mostrarToast">
+                <div aria-live="polite" aria-atomic="true" 
+                     class="position-fixed top-50 start-50 translate-middle" style="z-index: 1080;">                
+                    <div th:if="${error}" class="toast show"
+                         role="alert"
+                         aria-live="assertive"                     
+                         aria-atomic="true"
+                         data-bs-autohide="true">
+                        <div class="toast-header text-white bg-danger">
+                            <i class="fa-solid fa-bomb"></i> <strong clas=me-auto> [[#{error}]]</strong>
+                        </div>
+                        <div class="toast-body">
+                            <p>[[${error}]]</p>
+                            <div class="mt-2 pt-2 border-top text-center">
+                                <button type="button" class="btn btn-secondary btn-sm" 
+                                        data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div th:if="${todoOk}" class="toast show"
+                         role="status"
+                         aria-live="polite"
+                         aria-atomic="true"
+                         data-bs-autohide="true">
+                        <div class="toast-header text-white bg-success">
+                            <i class="fa-solid fa-square-check"></i> <strong clas=me-auto> [[#{atencion}]]</strong>
+                        </div>
+                        <div class="toast-body">
+                            <p>[[${todoOk}]]</p>
+                            <div class="mt-2 pt-2 border-top text-center">
+                                <button type="button" class="btn btn-secondary btn-sm" 
+                                        data-bs-dismiss="toast">[[#{accion.cerrar}]]</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
+
+
+
+            
+            
+            
+        </header>
+
+        <footer th:fragment="footer" class="p-2 mt-5 bg-info text-white"> <!-- Fragmento reutilizable de Thymeleaf para el pie de página, con fondo celeste (bg-info). -->
+            <p class="lead text-center">[[#{plantilla.derechos}]] &COPY;</p> <!-- Muestra un mensaje de derechos reservados en el centro. -->
+        </footer>
+    </body>
 </html>
 
 
@@ -221,4 +215,4 @@
 
 
 
-
+ 
